@@ -1,6 +1,6 @@
 package itstep.learning.oop;
 
-public class Pump extends Product {
+public class Pump extends Product implements Manual {
     int productivity;
 
     public Pump(String manufacturer, int productivity) {
@@ -19,5 +19,10 @@ public class Pump extends Product {
     @Override
     public String getCard() {
         return String.format("Pump: '%s', Power: %d l/h", super.getManufacturer(), this.getProductivity());
+    }
+
+    @Works("as pump")
+    public void pump(){
+        System.out.println("Working on: "+ getCard());
     }
 }
