@@ -1,7 +1,5 @@
 package itstep.learning.oop;
 
-import itstep.learning.Warranty;
-
 import java.util.Locale;
 
 @Warranty(1)

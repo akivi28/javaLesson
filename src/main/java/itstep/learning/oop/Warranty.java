@@ -1,4 +1,4 @@
-package itstep.learning;
+package itstep.learning.oop;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
