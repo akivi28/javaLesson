@@ -1,6 +1,9 @@
 package itstep.learning;
 
 import com.google.inject.Guice;
+import itstep.learning.db.DbDemo;
+import itstep.learning.fs.FileDemo;
+import itstep.learning.ioc.DbModule;
 import itstep.learning.ioc.ServicesModule;
 import itstep.learning.ioc.IocDemo;
 import itstep.learning.oop.Shop;
@@ -15,6 +18,8 @@ public class App
     {
 //        new Basics().run();
 //        new Shop().run();
-        Guice.createInjector(new ServicesModule()).getInstance(IocDemo.class).run();
+//        Guice.createInjector(new ServicesModule()).getInstance(IocDemo.class).run();
+//        Guice.createInjector(new ServicesModule(), new DbModule()).getInstance(DbDemo.class).run();
+        Guice.createInjector(new ServicesModule(), new DbModule()).getInstance(FileDemo.class).run();
     }
 }
