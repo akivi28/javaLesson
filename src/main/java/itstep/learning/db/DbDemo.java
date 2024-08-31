@@ -13,21 +13,46 @@ public class DbDemo {
         System.out.println("Db Demo");
         Driver mysqlDriver;
         try {
-//            mysqlDriver = new com.mysql.cj.jdbc.Driver();
-//            DriverManager.registerDriver(mysqlDriver);
-//
-//            Connection connection = DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3308/java" +
-//                            "?useUnicode=true&characterEncoding=utf8",
-//                    "user222",
-//                    "pass222");
-
             Statement statement = connection.createStatement();
-            ResultSet res = statement.executeQuery("SHOW DATABASES");
-            while (res.next()) {
-                System.out.println(res.getString(1));
+//            ResultSet res = statement.executeQuery("SHOW DATABASES");
+//            while (res.next()) {
+//                System.out.println(res.getString(1));
+//            }
+//            res.close();
+
+            statement.execute("insert into journal(date)\n" +
+                    "value(NOW());");
+            statement.close();
+
+//            DriverManager.deregisterDriver(mysqlDriver);
+            mysqlDriver = null;
+        }
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    public void run(String str){
+        System.out.println("Db Demo");
+        Driver mysqlDriver;
+        try {
+            Statement statement = connection.createStatement();
+//            ResultSet res = statement.executeQuery("SHOW DATABASES");
+//            while (res.next()) {
+//                System.out.println(res.getString(1));
+//            }
+//            res.close();
+
+            statement.execute("insert into journal(date)\n" +
+                    "value(NOW());");
+
+            if(str == "--journal"){
+                ResultSet resultSet = statement.executeQuery("select * from journal");
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getString("date"));
+                }
             }
-            res.close();
+
             statement.close();
 
 //            DriverManager.deregisterDriver(mysqlDriver);

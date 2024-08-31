@@ -17,8 +17,8 @@ public class App
 //        new Basics().run();
 //        new Shop().run();
 //          Guice.createInjector(new ServicesModule()).getInstance(IocDemo.class).run();
-          Guice.createInjector(new RandomStringServicesModule()).getInstance(IocRandomDemo.class).run();
-//        Guice.createInjector(new ServicesModule(), new DbModule()).getInstance(DbDemo.class).run()
+//          Guice.createInjector(new RandomStringServicesModule()).getInstance(IocRandomDemo.class).run();
+        Guice.createInjector(new ServicesModule(), new DbModule()).getInstance(DbDemo.class).run("--journal");
 //   Guice.createInjector(new ServicesModule(), new DbModule()).getInstance(FileDemo.class).run();
     }
 }

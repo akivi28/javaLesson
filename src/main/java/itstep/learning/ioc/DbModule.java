@@ -27,7 +27,7 @@ public class DbModule extends AbstractModule {
 
             }
             catch (SQLException e) {
-                System.err.println("DbModule::getCoonecton" + e.getMessage());
+                System.err.println("DbModule::getConnecton" + e.getMessage());
             }
         }
         return connection;
