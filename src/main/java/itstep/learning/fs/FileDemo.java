@@ -9,6 +9,10 @@ import java.util.Map;
 public class FileDemo {
 
     public void run(){
+        writeToFile();
+    }
+
+    public String formatDbString(){
         try( InputStream rs = this.getClass().getClassLoader().getResourceAsStream("db.ini")){
             String content = readStream(rs);
             Map<String,String> ini = new HashMap<>();
@@ -19,16 +23,53 @@ public class FileDemo {
                 ini.put(parts[0],parts[1].trim());
             }
 
-            System.out.println(String.format("jdbs:%s://%s:%s/%s",
+            StringBuilder builder = new StringBuilder();
+            builder.append(String.format("jdbc:%s://%s:%s/%s?%s=%s&%s=%s",
                     ini.get("dbms"),
                     ini.get("host"),
                     ini.get("port"),
-                    ini.get("schema")));
-
+                    ini.get("schema"),
+                    "useUnicode",
+                    ini.get("useUnicode"),
+                    "characterEncoding",
+                    ini.get("characterEncoding")));
+            return builder.toString();
         } catch (IOException e) {
-            System.out.println(e);
+            return e.getMessage();
         }
     }
+
+    public String getUser(){
+        try( InputStream rs = this.getClass().getClassLoader().getResourceAsStream("db.ini")){
+            String content = readStream(rs);
+            Map<String,String> ini = new HashMap<>();
+
+            String[]lines = content.split("\n");
+            for(String line : lines){
+                String[] parts = line.split("=");
+                ini.put(parts[0],parts[1].trim());
+            }
+            return ini.get("user");
+        } catch (IOException e) {
+            return e.getMessage();
+        }
+    }
+    public String getPassword(){
+        try( InputStream rs = this.getClass().getClassLoader().getResourceAsStream("db.ini")){
+            String content = readStream(rs);
+            Map<String,String> ini = new HashMap<>();
+
+            String[]lines = content.split("\n");
+            for(String line : lines){
+                String[] parts = line.split("=");
+                ini.put(parts[0],parts[1].trim());
+            }
+            return ini.get("password");
+        } catch (IOException e) {
+            return e.getMessage();
+        }
+    }
+
     public void runFile(){
         System.out.println("File System");
 
@@ -68,6 +109,19 @@ public class FileDemo {
                 byteBuilder.write(buffer, 0, len);
             }
             return byteBuilder.toString(charset.name());
+        }
+    }
+
+    public void writeToFile(){
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("dbini.txt"))) {
+            writer.write(formatDbString());
+            writer.newLine();
+            writer.write(getUser());
+            writer.newLine();
+            writer.write(getPassword());
+        }
+        catch (IOException exception){
+            System.err.println(exception.getMessage());
         }
     }
 }

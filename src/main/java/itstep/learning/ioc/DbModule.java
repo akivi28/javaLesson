@@ -2,6 +2,7 @@ package itstep.learning.ioc;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import itstep.learning.fs.FileDemo;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -16,14 +17,15 @@ public class DbModule extends AbstractModule {
     private Connection getConnection() {
         if (connection == null) {
             try {
+                FileDemo demo = new FileDemo();
                 mysqlDriver = new com.mysql.cj.jdbc.Driver();
                 DriverManager.registerDriver(mysqlDriver);
 
                 connection = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3308/java" +
-                                "?useUnicode=true&characterEncoding=utf8",
-                        "user222",
-                        "pass222");
+                        demo.formatDbString(),
+                        demo.getUser(),
+                        demo.getPassword());
+                System.out.println(connection.getMetaData().getURL());
 
             }
             catch (SQLException e) {
